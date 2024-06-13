@@ -1,0 +1,39 @@
+/ {
+	pfsd {
+		pwm_polarity = <0x1>;
+	};
+
+	pwm-fan {
+		/delete-property/ active_pwm;
+		profiles {
+			default = "quiet";
+			quiet {
+				state_cap = <7>;
+				active_pwm = <0x00 0x28 0x40 0x50 0x60 0x70 0x80 0x90 0x90 0x90>;
+			};
+			cool {
+				state_cap = <4>;
+				active_pwm = <0 77 120 160 255 255 255 255 255 255>;
+			};
+		};
+	};
+	thermal-fan-est {
+		/delete-property/ active_trip_temps;
+		/delete-property/ active_hysteresis;
+		profiles {
+			default = "quiet";
+			quiet {
+				active_trip_temps = <0 50000 63000 72000 81000
+						140000 150000 160000 170000 180000>;
+				active_hysteresis = <0 18000 8000 8000 8000
+						0 0 0 0 0>;
+			};
+			cool {
+				active_trip_temps = <0 35000 53000 62000 73000
+						140000 150000 160000 170000 180000>;
+				active_hysteresis = <0 9000 8000 8000 9000
+						0 0 0 0 0>;
+			};
+		};
+	};
+};

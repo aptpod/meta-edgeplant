@@ -1,0 +1,20 @@
+---
+ nvidia/drivers/misc/mods/mods_config.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/nvidia/drivers/misc/mods/mods_config.h b/nvidia/drivers/misc/mods/mods_config.h
+index e1f9bca6b703..9c7b961048c7 100644
+--- a/nvidia/drivers/misc/mods/mods_config.h
++++ b/nvidia/drivers/misc/mods/mods_config.h
+@@ -39,7 +39,7 @@
+ #endif
+ #define MODS_MULTI_INSTANCE_DEFAULT_VALUE 1
+ #define MODS_HAS_IORESOURCE_MEM_64 1
+-#undef MODS_HAS_NEW_ACPI_HANDLE /* new in 3.13 */
++#define MODS_HAS_NEW_ACPI_HANDLE 1
+ #if defined(CONFIG_ARCH_TEGRA)
+ #define MODS_TEGRA 1
+ #endif
+-- 
+2.25.1
+

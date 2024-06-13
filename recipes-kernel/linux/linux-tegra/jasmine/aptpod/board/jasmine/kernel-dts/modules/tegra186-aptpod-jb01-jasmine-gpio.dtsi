@@ -1,0 +1,35 @@
+&en_vdd_ts_1v8 {
+	gpio = <&gpio_i2c_0_74 12 1>;
+};
+
+&en_vdd_ts_hv_3v3 {
+	gpio = <&gpio_i2c_0_74 12 1>;
+};
+
+&en_avdd_disp_3v3 {
+	gpio = <&gpio_i2c_0_74 13 0>;
+};
+
+&en_mdm_pwr_3v7 {
+	gpio = <&gpio_i2c_0_74 12 1>;
+};
+
+&en_vdd_disp_1v8 {
+	gpio = <&gpio_i2c_0_74 12 1>;
+};
+
+&vdd_fan {
+	gpio = <&gpio_i2c_0_74 13 0>;
+};
+
+&dis_vdd_1v2 {
+	gpio = <&gpio_i2c_0_74 12 1>;
+};
+
+&en_vdd_cam {
+	gpio = <&gpio_i2c_0_77 13 0>;
+};
+
+&vdd_hdmi {
+	gpio = <&gpio_i2c_0_77 9 1>;
+};

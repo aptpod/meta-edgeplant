@@ -1,0 +1,23 @@
+--- a/bootloader/t186ref/BCT/tegra186-mb1-bct-misc-si-l4t.cfg
++++ b/bootloader/t186ref/BCT/tegra186-mb1-bct-misc-si-l4t.cfg
+@@ -16,7 +16,7 @@
+ cpu.nafll_b_cluster_data = 0x11F04461;
+ ##### debug variables #####
+ debug.enable_log = 1;
+-debug.uart_instance = 0;
++debug.uart_instance = 2;
+ ##### sw_carveout variables #####
+ sw_carveout.cpubl_carveout_addr = 0x96000000;
+ sw_carveout.cpubl_carveout_size = 0x02000000;
+
+--- a/p2771-0000.conf.common
++++ b/p2771-0000.conf.common
+@@ -228,7 +228,7 @@
+ 	USE_UBOOT=1;
+ fi;
+ ROOTFSSIZE=28GiB;
+-CMDLINE_ADD="console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 isolcpus=1-2";
++CMDLINE_ADD="console=ttyS2,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 isolcpus=1-2";
+ target_board="t186ref";
+ ROOT_DEV="mmcblk0p12 ------------ internal eMMC.
+         sda1 ----------------- external USB devices. (USB memory stick, HDD)

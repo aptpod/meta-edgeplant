@@ -1,0 +1,37 @@
+/delete-node/ &gpio_i2c_0_74;
+/delete-node/ &gpio_i2c_0_77;
+
+/ {
+	i2c@c240000 {
+		gpio_i2c_0_74: gpio@74 {
+			compatible = "ti,tca9539";
+			reg = <0x74>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			vcc-supply = <&battery_reg>;
+		};
+		gpio@74 {
+			touch-rails {
+				gpio-hog;
+				gpios = <1 0 2 0>;
+				output-high;
+				label = "touch-rail-1", "touch-rail-2";
+			};
+		};
+		gpio_i2c_0_77: gpio@77 {
+			compatible = "ti,tca9539";
+			reg = <0x77>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			vcc-supply = <&battery_reg>;
+		};
+		gpio@77 {
+			lcd-bias-rails {
+				gpio-hog;
+				gpios = <4 0>;
+				output-high;
+				label = "lcd-bias-en-rail";
+			};
+		};
+	};
+};

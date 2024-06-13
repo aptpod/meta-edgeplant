@@ -1,0 +1,12 @@
+/ {
+	aliases {
+		rtc2 = &mcp7940;
+	};
+
+	i2c@c240000 {
+		mcp7940: rtc@6f {
+			compatible = "mcp7940x";
+			reg = <0x6f>;
+		};
+	};
+};

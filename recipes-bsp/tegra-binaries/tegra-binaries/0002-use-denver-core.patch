@@ -1,0 +1,11 @@
+--- a/p2771-0000.conf.common
++++ b/p2771-0000.conf.common
+@@ -228,7 +228,7 @@
+ 	USE_UBOOT=1;
+ fi;
+ ROOTFSSIZE=28GiB;
+-CMDLINE_ADD="console=ttyS2,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 isolcpus=1-2";
++CMDLINE_ADD="console=ttyS2,115200n8 console=tty0 fbcon=map:0 net.ifnames=0 isolcpus=";
+ target_board="t186ref";
+ ROOT_DEV="mmcblk0p12 ------------ internal eMMC.
+         sda1 ----------------- external USB devices. (USB memory stick, HDD)

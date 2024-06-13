@@ -1,0 +1,33 @@
+/ {
+	xhci@3530000 {
+		phys = <&{/xusb_padctl@3520000/pads/usb2/lanes/usb2-0}>,
+			<&{/xusb_padctl@3520000/pads/usb2/lanes/usb2-1}>,
+			<&{/xusb_padctl@3520000/pads/usb2/lanes/usb2-2}>,
+			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-0}>,
+			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-2}>;
+		phy-names = "usb2-0", "usb2-1", "usb2-2", "usb3-0", "usb3-2";
+	};
+
+	gpio@2200000 {
+		pcie0_lane2_mux {
+			status = "disabled";
+		};
+	};
+};
+
+&xusb_padctl {
+	ports {
+		usb3-2 {
+			status = "okay";
+			nvidia,usb2-companion = <0x2>;
+		};
+	};
+};
+
+&en_vdd_cam_1v2 {
+	gpio = <&gpio_i2c_0_77 13 0>;
+};
+
+&vdd_usb2_5v {
+	gpio = <&gpio_i2c_0_77 13 1>;
+};

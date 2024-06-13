@@ -1,0 +1,6 @@
+/ {
+	i2c@3160000 {
+		/delete-node/ ina3221x@42;
+		/delete-node/ ina3221x@43;
+	};
+};

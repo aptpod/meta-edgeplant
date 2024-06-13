@@ -1,0 +1,60 @@
+diff --git a/arch/arm64/boot/dts/Makefile b/arch/arm64/boot/dts/Makefile
+index 99b6232c5fa3..aa1a1146ed6c 100644
+--- a/arch/arm64/boot/dts/Makefile
++++ b/arch/arm64/boot/dts/Makefile
+@@ -53,6 +53,9 @@ DTC_FLAGS += -i $(tegra-dtstree)/platform/t18x/common/kernel-dts
+ DTCCPP_FLAGS += -I$(tegra-dtstree)/soc/t18x/kernel-include
+ DTCCPP_FLAGS += -I$(tegra-dtstree)/soc/t18x/kernel-dts
+ DTCCPP_FLAGS += -I$(tegra-dtstree)/platform/t18x/common/kernel-dts
++
++DTC_FLAGS += -i $(aptpod-dtstree)/jasmine/dts
++DTCCPP_FLAGS += -I$(aptpod-dtstree)/jasmine/dts
+ endif
+ 
+ ifeq ($(CONFIG_ARCH_TEGRA_19x_SOC),y)
+@@ -98,6 +101,27 @@ DTB_NEW_RULE_LIST := $(dtb-y)
+ DTBO_LIST += $(dtbo-y)
+ DTBO_NEW_RULE_LIST := $(dtbo-y)
+ 
++# add aptpod dts
++DTB_LIST := $(dtb-y)
++DTBO_LIST := $(dtbo-y)
++dtb-y :=
++dtbo-y :=
++dts_aptpod_mfiles = $(call dts_makefile, $(aptpod-dtstree)/, Makefile)
++ifneq ($(dts_aptpod_mfiles),)
++dts-include :=
++include $(dts_aptpod_mfiles)
++dtb-y := $(addprefix $(aptpod-rel-dtstree)/aptpod/board/,$(dtb-y))
++dtbo-y := $(addprefix $(aptpod-rel-dtstree)/aptpod/board/,$(dtbo-y))
++ifneq ($(dts-include),)
++DTC_FLAGS += $(addprefix -i $(aptpod-dtstree)/,$(dts-include))
++DTCCPP_FLAGS += $(addprefix -I$(aptpod-dtstree)/,$(dts-include))
++endif
++endif
++DTB_LIST += $(dtb-y)
++DTB_NEW_RULE_LIST += $(dtb-y)
++DTBO_LIST += $(dtbo-y)
++DTBO_NEW_RULE_LIST += $(dtbo-y)
++
+ # Now save DTB_LIST to dtb-y
+ dtb-y := $(DTB_LIST)
+ dtbo-y := $(DTBO_LIST)
+diff --git a/scripts/Kbuild.include b/scripts/Kbuild.include
+index a9aaabc19794..a33377b3322a 100644
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -478,5 +478,10 @@ tegra-dtstree = $(srctree)/nvidia
+ 
+ tegra-root-dtstree = $(subst ^$(realpath $(tegra-dtstree)/..)/,,^$(realpath $(srctree)/arch/arm64/boot/dts))
+ tegra-rel-dtstree = $(subst $(the-space),/,$(patsubst %,..,$(subst /, ,$(tegra-root-dtstree))))
++
++aptpod-dtstree = $(srctree)/aptpod/board
++aptpod-root-dtstree = $(subst ^$(realpath $(aptpod-dtstree)/../..)/,,^$(realpath $(srctree)/arch/arm64/boot/dts))
++aptpod-rel-dtstree = $(subst $(the-space),/,$(patsubst %,..,$(subst /, ,$(aptpod-root-dtstree))))
++
+ # delete partially updated (i.e. corrupted) files on error
+ .DELETE_ON_ERROR:
+-- 
+2.25.1
+

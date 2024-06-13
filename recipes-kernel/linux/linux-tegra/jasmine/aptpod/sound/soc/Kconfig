@@ -1,0 +1,6 @@
+if SND_SOC
+
+source "sound/soc/codecs/Kconfig"
+source "sound/soc/tegra/Kconfig"
+
+endif

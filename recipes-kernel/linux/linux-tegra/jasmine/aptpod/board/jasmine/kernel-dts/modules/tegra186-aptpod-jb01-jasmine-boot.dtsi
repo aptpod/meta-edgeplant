@@ -1,0 +1,6 @@
+/ {
+	chosen {
+		bootargs ="console=ttyS2,115200";
+		stdout-path = &uartc;
+	};
+};

@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index df64ce6071e7..1b3f53bc6dac 100644
+--- a/Makefile
++++ b/Makefile
+@@ -10,4 +10,5 @@ KERNEL_OVERLAYS += $(CURDIR)/nvidia
+ KERNEL_OVERLAYS += $(CURDIR)/nvidia/nvgpu
++KERNEL_OVERLAYS += $(CURDIR)/aptpod
+ else
+ override KERNEL_OVERLAYS := $(subst :, ,$(KERNEL_OVERLAYS))
+ endif
+-- 
+2.25.1
+

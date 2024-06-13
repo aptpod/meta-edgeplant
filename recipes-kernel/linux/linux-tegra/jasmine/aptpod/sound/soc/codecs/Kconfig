@@ -1,0 +1,7 @@
+if SND_SOC
+
+config SND_SOC_JB01_MAX9867
+	tristate "Maxim MAX9867 CODEC on JB01 board"
+	depends on I2C
+
+endif

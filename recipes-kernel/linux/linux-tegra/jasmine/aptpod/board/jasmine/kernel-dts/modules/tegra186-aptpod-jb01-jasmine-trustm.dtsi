@@ -1,0 +1,18 @@
+/ {
+	i2c@31e0000 {
+		trust_m@30 {
+			compatible = "infineon,sls32aia010mx";
+			reg = <0x30>;
+		};
+	};
+
+	gpio@2200000 {
+		trust_m-reset-output {
+			gpio-hog;
+			gpios = <TEGRA_MAIN_GPIO(Y, 1) 0>;	/* GPIO16_MDM_WAKE_AP */
+			output-high;
+			label = "trust_m-reset-output";
+			status = "okay";
+		};
+	};
+};

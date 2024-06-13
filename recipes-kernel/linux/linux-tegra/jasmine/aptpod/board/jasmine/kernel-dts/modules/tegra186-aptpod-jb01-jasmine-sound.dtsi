@@ -1,0 +1,69 @@
+#include <dt-bindings/pinctrl/pinctrl-tegra.h>
+
+/ {
+	i2c@31c0000 {
+		acodec: max9867@18 {
+			compatible = "maxim,max9867";
+			reg = <0x18>;
+			status = "okay";
+      
+			gpios = <&tegra_main_gpio TEGRA_MAIN_GPIO(BB, 0) GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	gpio@2200000 {
+		audio_irq {
+			gpio-hog;
+			gpios = <TEGRA_MAIN_GPIO(BB, 0) GPIO_ACTIVE_HIGH>;
+			input;
+			label = "audio-irq";
+			status = "okay";
+		};
+	};
+
+	sound {
+		compatible = "nvidia,tegra-audio-t186ref-mobile-max9867";
+		nvidia,model = "tegra-snd-t186ref-mobile-max9867";
+
+		nvidia,audio-routing =
+			"y Headphone Jack", "y LOUT",
+			"y Headphone Jack", "y ROUT",
+			"y MICL", "y Mic Jack",
+			"y MICR", "y Mic Jack";
+
+		status = "okay";
+
+		nvidia,dai-link-2 {
+			link-name = "max9867-codec";
+			cpu-dai = <&tegra_i2s2>;
+			codec-dai = <&acodec>;
+			cpu-dai-name = "I2S2";
+			codec-dai-name = "max9867-aif1";
+			format = "i2s";
+			bitclock-slave;
+			frame-slave;
+			bit-format = "s16_le";
+			srate = <48000>;
+			bclk_ratio = <0>;
+			num-channel = <2>;
+			ignore_suspend;
+			name-prefix = "y";
+			status = "okay";
+		};
+	};
+};
+
+&pinmux_default {
+	audio_mclk {
+		nvidia,pins = "aud_mclk_pj4";
+		nvidia,function = "aud";
+		nvidia,pull = <TEGRA_PIN_PULL_UP>;
+		nvidia,tristate = <TEGRA_PIN_DISABLE>;
+		nvidia,enable-input = <TEGRA_PIN_DISABLE>;
+		status = "okay";
+	};
+};
+
+&tegra_i2s2 {
+	fsync-width = <0x1f>;
+};

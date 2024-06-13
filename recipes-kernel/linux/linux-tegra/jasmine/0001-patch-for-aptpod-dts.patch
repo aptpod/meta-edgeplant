@@ -1,0 +1,46 @@
+--- a/nvidia/platform/t18x/quill/kernel-dts/tegra186-quill-p3489-0888-a00-00-base.dts
++++ b/nvidia/platform/t18x/quill/kernel-dts/tegra186-quill-p3489-0888-a00-00-base.dts
+@@ -1,7 +1,9 @@
+ /*
+- * tegra186-quill-p3489-0888-a00-00-base.dts Lightning Board
++ * tegra186-aptpod-jb01-jasmine.dts aptpod JB01 Board
++ *  based on tegra186-quill-p3489-0888-a00-00-base.dts Lightning Board
+  *
+  * Copyright (c) 2018-2019, NVIDIA CORPORATION. All rights reserved.
++ * Copyright (c) 2021, aptpod,Inc. All rights reserved.
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+@@ -26,8 +28,8 @@
+ #include <t18x-common-plugin-manager/tegra186-quill-camera-plugin-manager.dtsi>
+ 
+ / {
+-	model = "lightning";
+-	compatible = "nvidia,lightning", "nvidia,p2597-0000+p3489-0888", "nvidia,tegra186";
++	model = "aptpod JB01 Jasmine";
++	compatible = "aptpod,jb01", "nvidia,lightning", "nvidia,p2597-0000+p3489-0888", "nvidia,tegra186";
+ 
+ 	nvidia,dtsfilename = __FILE__;
+ 	nvidia,boardids = "3489:0888:A0";
+@@ -466,3 +468,18 @@
+ #ifdef KERNEL_VERSION_4_9
+ #include "quill-platforms/tegra186-quill-kernel-4.9.dtsi"
+ #endif
++
++/* jasmine dtsi file */
++#include <modules/tegra186-aptpod-jb01-jasmine-boot.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-fan.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-gpio.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-gps-pps.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-ioexpander.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-led.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-lte.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-rtc.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-uart.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-sound.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-trustm.dtsi>
++#include <modules/tegra186-aptpod-jb01-jasmine-regulator.dtsi>
++
+-- 
+2.25.1
+

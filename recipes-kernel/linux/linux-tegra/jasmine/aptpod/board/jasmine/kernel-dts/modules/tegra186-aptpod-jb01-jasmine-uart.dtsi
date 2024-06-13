@@ -1,0 +1,22 @@
+/ {
+	serial@3100000 {
+		compatible = "nvidia,tegra186-hsuart";
+		resets = <&tegra_car TEGRA186_RESET_UARTA>;
+		reset-names = "serial";
+	};
+
+	serial@c280000 {
+		compatible = "nvidia,tegra20-uart", "nvidia,tegra186-hsuart";
+	};
+
+	gpio@2200000 {
+		neo-m8u-reset-output {
+			gpio-hog;
+			gpios = <TEGRA_MAIN_GPIO(X, 2) 0>;	/* GPIO3_PX.02 */
+			output-high;
+			label = "neo-m8u-reset-output";
+			status = "okay";
+		};
+	};
+
+};
