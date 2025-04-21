@@ -1,0 +1,22 @@
+// Enable MCP7940
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835";
+
+    fragment@0 {
+        target = <&i2c0>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "okay";
+
+            mcp7940: mcp7940@6f {
+                compatible = "microchip,mcp7940x";
+                reg = <0x6f>;
+				status = "okay";
+            };
+        };
+    };
+};

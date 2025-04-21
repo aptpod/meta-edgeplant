@@ -1,7 +1,0 @@
-/ {
-	pps {
-			gpios = <&tegra_main_gpio TEGRA_MAIN_GPIO(B, 4) 0>;
-			compatible = "pps-gpio";
-			status = "okay";
-	};
-};

@@ -1,0 +1,33 @@
+// Enable CAN-USB
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target = <&gpio>;
+		__overlay__ {
+			can_usb_pins: can_usb_pins {
+				brcm,pins = <20 21>;
+				brcm,function = <2 1>; /* alt5 out */
+                brcm,pull = <0 0>; /* no pull */
+			};
+		};
+	};
+
+    fragment@1 {
+        target = <&pwm>;
+        __overlay__ {
+            //#clock-cells = <1>;
+            clocks = <&clocks 38>; /* BCM2835_CLOCK_GP0 */
+            assigned-clocks = <&clocks 38>;
+            assigned-clock-rates = <10000000>;
+
+            pinctrl-names = "default";
+            pinctrl-0 = <&can_usb_pins>;
+
+            status = "okay";
+        };
+    };
+};

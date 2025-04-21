@@ -1,0 +1,11 @@
+[Unit]
+Description=edgeplant rpi boot service
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/reset-canusb.sh
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

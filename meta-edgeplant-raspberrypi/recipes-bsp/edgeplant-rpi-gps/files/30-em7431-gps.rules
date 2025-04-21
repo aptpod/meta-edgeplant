@@ -1,0 +1,8 @@
+ACTION!="add", GOTO="em7431_end"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1199", ATTRS{idProduct}=="9091", GOTO="em7431_gps"
+GOTO="em7431_end"
+
+LABEL="em7431_gps"
+SUBSYSTEM=="tty", ATTRS{bInterfaceNumber}=="02", SYMLINK+="ttyGPS", TAG+="systemd", ENV{SYSTEMD_WANTS}+="edgeplant-rpi-gps.service"
+
+LABEL="em7431_end"

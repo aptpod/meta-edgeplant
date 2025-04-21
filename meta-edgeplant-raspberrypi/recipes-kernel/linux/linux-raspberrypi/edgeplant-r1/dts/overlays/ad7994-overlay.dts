@@ -1,0 +1,89 @@
+// Enable AD7994
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835";
+
+    fragment@0 {
+        target = <&i2c1>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+	/* add ALERT/BUSY GPIO settings */
+	fragment@1 {
+		target = <&gpio>;
+		__overlay__ {
+			ad7994_alert_busy_pins: ad7994_alert_busy_pins {
+				brcm,pins = <10>;
+				brcm,function = <0>; /* in */
+				brcm,pull = <2>; /* up */
+			};
+		};
+	};
+
+    fragment@2 {
+        target-path = "/";
+        __overlay__ {
+            vdd_adc_vref: supply_3v0_ref {
+                compatible = "regulator-fixed";
+                regulator-name = "adc-vref";
+                regulator-min-microvolt = <3000000>;
+                regulator-max-microvolt = <3000000>;
+                regulator-always-on;
+            };
+        };
+    };
+
+    fragment@3 {
+        target = <&i2c1>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "okay";
+
+            adc: adc@23 {
+                compatible = "adi,ad7994";
+                reg = <0x23>;
+
+				pinctrl-names = "default";
+				pinctrl-0 = <&ad7994_alert_busy_pins>;
+				interrupt-parent = <&gpio>;
+				interrupts = <10 2>; /* 4: IRQF_TRIGGER_FALLING */
+
+                /* for evaluation board */
+                vcc-supply = <&vdd_3v3_reg>;
+                vref-supply = <&vdd_adc_vref>;
+            };
+        };
+    };
+
+    /* change clock frequency to fast-mode */
+    fragment@4 {
+        target = <&i2c1>;
+        __overlay__ {
+			clock-frequency = <400000>;
+		};
+	};
+
+    /* disable spi0 */
+	fragment@10 {
+		target = <&spidev0>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+    fragment@11 {
+        target = <&spi0>;
+        __overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			status = "disabled";
+        };
+    };
+
+};

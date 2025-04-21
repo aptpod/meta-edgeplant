@@ -1,0 +1,86 @@
+#!/bin/bash -eu
+#
+# Copyright (c) 2023, aptpod,Inc.
+#
+
+source "/usr/bin/edgeplant-raspi/menu_select.sh"
+
+function check_root_access() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "This function needs sudo access. Please run as root."
+        exit 1
+    fi
+}
+
+function update_powermanage() {
+    check_root_access
+    /bin/bash "/usr/bin/edgeplant-raspi/update_powermanage.sh" "$1" "$2"
+}
+
+function dump_powermanage_settings() {
+    /usr/bin/edgeplant_powermanage dump
+}
+
+function change_woc_settings() {
+    /bin/bash "/usr/bin/edgeplant-raspi/wake_on_can.sh"
+}
+
+function change_powermanage_timer_settings() {
+    /bin/bash "/usr/bin/edgeplant-raspi/change_timer.sh"
+}
+
+function menu_title() {
+    echo "================================================================================"
+    echo " EDGEPLANT Raspberrypi TOOLS"
+    echo "================================================================================"
+    echo "Choose a number or Enter 'q' for exit"
+    echo ""
+}
+
+function menu_target_board() {
+    echo "--------------------------------------------------------------------------------"
+    echo " Select the target board"
+    echo "--------------------------------------------------------------------------------"
+
+    declare -a targets=("EDGEPLANT R1")
+    menu_select targets
+
+    case ${targets[$MENU_SELECT]} in
+    "EDGEPLANT R1")
+        PM_FILE_NAME_PREFIX="ER1-2LNA_power-management"
+        PM_FILE_EXT="bin"
+        ;;
+    esac
+
+}
+
+function menu_function() {
+    echo "--------------------------------------------------------------------------------"
+    echo " Select function"
+    echo "--------------------------------------------------------------------------------"
+
+    declare -a functions=("Update powermanage",
+                          "Dump powermanage settings",
+                          "Change Wake on CAN settings",
+                          "Change powermanage timer settings")
+    menu_select functions
+
+    case $MENU_SELECT in
+    0)
+        update_powermanage $PM_FILE_NAME_PREFIX $PM_FILE_EXT
+        ;;
+    1)
+        dump_powermanage_settings
+        ;;
+    2)
+        change_woc_settings
+        ;;
+    3)
+        change_powermanage_timer_settings
+        ;;
+    esac
+}
+
+menu_title
+menu_target_board
+menu_function

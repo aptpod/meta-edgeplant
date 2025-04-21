@@ -1,0 +1,60 @@
+// Enable LSM6DSO i2c
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target = <&i2c5>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	/* add INT2 GPIO settings */
+	fragment@2 {
+		target = <&gpio>;
+		__overlay__ {
+			lsm6dso_int2_pins: lsm6dso_int2_pins {
+				brcm,pins = <4>;
+				brcm,function = <0>; /* in */
+				brcm,pull = <1>; /* down */
+			};
+		};
+	};
+
+    /* add lsm6dso i2c5 */
+    fragment@3 {
+        target = <&i2c5>;
+        __overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			status = "okay";
+
+            lsm6dso: lsm6dso@6a {
+				compatible = "st,lsm6dso";
+				reg = <0x6a>; /* SAD SDO=0,0x6A SDO=1,0x6B */
+				status = "okay";
+
+				pinctrl-names = "default";
+				pinctrl-0 = <&lsm6dso_int2_pins>;
+
+				st,drdy-int-pin = <2>; /* INT2 */
+				interrupt-parent = <&gpio>;
+				interrupts = <4 1>; /* 1: IRQF_TRIGGER_RISING */
+			};
+        };
+    };
+
+    /* change clock frequency to fast-mode */
+    fragment@4 {
+        target = <&i2c5>;
+        __overlay__ {
+			clock-frequency = <400000>;
+		};
+	};
+
+};
