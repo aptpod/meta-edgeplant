@@ -1,0 +1,27 @@
+From c087f445146263f4bdd572fda369fdf42fe6094c Mon Sep 17 00:00:00 2001
+From: nomoto <nomoto@aptpod.co.jp>
+Date: Mon, 26 May 2025 15:16:43 +0900
+Subject: [PATCH] feat: add AD7994 external vref support
+
+Upstream-Status: Inappropriate [configuration specific]
+---
+ drivers/iio/adc/ad799x.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/iio/adc/ad799x.c b/drivers/iio/adc/ad799x.c
+index b757cc45c4de..ce102db56ba0 100644
+--- a/drivers/iio/adc/ad799x.c
++++ b/drivers/iio/adc/ad799x.c
+@@ -826,7 +826,8 @@ static int ad799x_probe(struct i2c_client *client)
+ 		 * Use external reference voltage if supported by hardware.
+ 		 * This is optional if voltage / regulator present, use VCC otherwise.
+ 		 */
+-		if ((st->id == ad7991) || (st->id == ad7995) || (st->id == ad7999)) {
++		if ((st->id == ad7991) || (st->id == ad7995) || (st->id == ad7999) ||
++		    (st->id == ad7994)) {
+ 			dev_info(&client->dev, "Using external reference voltage\n");
+ 			extra_config |= AD7991_REF_SEL;
+ 			ret = regulator_enable(st->vref);
+-- 
+2.25.1
+

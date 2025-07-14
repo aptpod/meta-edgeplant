@@ -13,6 +13,7 @@ SRC_URI:append:edgeplant-r1 = "\
     file://dts/overlays/eeprom-24lc32-overlay.dts;subdir=git/arch/${ARCH}/boot \
     file://dts/overlays/sd0-overlay.dts;subdir=git/arch/${ARCH}/boot \
     file://firmware/renesas_usb_fw.mem;subdir=git \
+    ${@if_kernel_recipe('file://0001-feat-add-AD7994-external-vref-support.patch', '', d)} \
 "
 
 KBUILD_DEFCONFIG:edgeplant-r1 ?= "bcm2711_defconfig"
